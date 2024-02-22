@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/97753280-3944-4249-bdf0-a3b1644426d0/resourceGroups/Lao-learn/providers/Microsoft.Web/sites/web-rtc-lao",
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}

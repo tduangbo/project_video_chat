@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Sidebar = ({ children }) => {
-  const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } = useContext(SocketContext);
+  const { me, callAccepted, name, setName, callEnded, leaveCall, callUser, screenShare } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState('');
   const classes = useStyles();
 
@@ -55,6 +55,9 @@ const Sidebar = ({ children }) => {
                   Copy Your ID
                 </Button>
               </CopyToClipboard>
+              <Button variant="contained" color="primary" fullWidth onClick={() => screenShare(idToCall)} className={classes.margin}>
+                Share Screen
+              </Button>
             </Grid>
             <Grid item xs={12} md={6} className={classes.padding}>
               <Typography gutterBottom variant="h6">Make a call</Typography>

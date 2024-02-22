@@ -5,7 +5,7 @@ import Peer from 'simple-peer';
 const SocketContext = createContext();
 
 // const socket = io('http://localhost:5000');
-const socket = io('https://warm-wildwood-81069.herokuapp.com');
+const socket = io('https://my-express-app-one.azurewebsites.net/');
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -72,6 +72,46 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
 
+  function handleSuccess(newStream) {
+    console.log(newStream);
+    // setStream(newStream);
+    // myVideo.current.srcObject = newStream;
+    userVideo.current.srcObject = newStream;
+
+    // demonstrates how to detect that the user has stopped
+    // sharing the screen via the browser UI.
+    newStream.getVideoTracks()[0].addEventListener('ended', () => {
+      console.log('The user has ended sharing the screen');
+      userVideo.current.srcObject = stream;
+    });
+  }
+
+  const screenShare = () => {
+    console.log('screen share ********************************');
+    const options = { audio: true, video: true };
+
+    navigator.mediaDevices.getDisplayMedia(options)
+      .then(handleSuccess);
+
+    // const peer = new Peer({ initiator: true, trickle: false, stream });
+
+    // peer.on('signal', (data) => {
+    //   socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+    // });
+
+    // peer.on('stream', (currentStream) => {
+    //   userVideo.current.srcObject = currentStream;
+    // });
+
+    // socket.on('callAccepted', (signal) => {
+    //   setCallAccepted(true);
+
+    //   peer.signal(signal);
+    // });
+
+    // connectionRef.current = peer;
+  };
+
   const leaveCall = () => {
     setCallEnded(true);
 
@@ -92,6 +132,7 @@ const ContextProvider = ({ children }) => {
       callEnded,
       me,
       callUser,
+      screenShare,
       leaveCall,
       answerCall,
     }}
